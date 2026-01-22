@@ -2,7 +2,7 @@ package io.github.pixeldev.urlshortener.domain.exception;
 
 public class ModelNotFoundException extends DomainException {
   public ModelNotFoundException(final String message) {
-    super(message);
+    super("MODEL_NOT_FOUND", message);
   }
 
   public static ModelNotFoundException create(final String modelName, final String id) {
