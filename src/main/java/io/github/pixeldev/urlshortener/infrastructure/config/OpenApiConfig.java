@@ -1,24 +1,17 @@
 package io.github.pixeldev.urlshortener.infrastructure.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
-import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @Configuration
-public class OpenApiConfig {
-
-  @Bean
-  public OpenAPI customOpenAPI() {
-    return new OpenAPI()
-        .info(
-            new Info()
-                .title("URL Shortener API")
-                .version("1.0.0")
-                .description(
-                    "Professional URL Shortening Service built with Clean Architecture and Spring Boot")
-                .contact(new Contact().name("Angel Miranda").email("pixeldev1729@gmail.com")));
-  }
-}
+@OpenAPIDefinition(info = @Info(title = "URL Shortener API", version = "v1"))
+@SecurityScheme(
+    name = "bearerAuth",
+    type = SecuritySchemeType.HTTP,
+    bearerFormat = "JWT",
+    scheme = "bearer")
+public class OpenApiConfig {}

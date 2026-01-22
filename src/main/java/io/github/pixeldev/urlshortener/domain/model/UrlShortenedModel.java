@@ -78,8 +78,8 @@ public class UrlShortenedModel {
     return expirationDate != null && expirationDate.isBefore(Instant.now(clock));
   }
 
-  public boolean isOwner(final @Nullable Long userId) {
-    return user != null && Objects.equals(user.getId(), userId);
+  public boolean hasAccess(final @Nullable String userId) {
+    return !this.isPrivate || (user != null && Objects.equals(user.getId(), userId));
   }
 
   public Instant getUpdatedAt() {

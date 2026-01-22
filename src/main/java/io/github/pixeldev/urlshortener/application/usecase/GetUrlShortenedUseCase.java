@@ -26,7 +26,7 @@ public class GetUrlShortenedUseCase implements GetUrlShortenedUseCasePort {
     if (urlShortenedModel.isExpired(this.clock)) {
       throw new ExpiredException(request.id());
     }
-    if (!urlShortenedModel.isOwner(request.userId())) {
+    if (!urlShortenedModel.hasAccess(request.userId())) {
       throw new AccessDeniedException("User does not have access to this URL shortened");
     }
     return new GetUrlShortenedResponse(urlShortenedModel.getOriginalUrl());

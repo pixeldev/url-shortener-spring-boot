@@ -8,8 +8,8 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class UserEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private String id;
 
   @Column(name = "full_name", nullable = false)
   private String fullName;
@@ -17,7 +17,7 @@ public class UserEntity {
   @Column(name = "created_at", nullable = false)
   private Instant createdAt;
 
-  public UserEntity(final Long id, final String fullName, final Instant createdAt) {
+  public UserEntity(final String id, final String fullName, final Instant createdAt) {
     this.id = id;
     this.fullName = fullName;
     this.createdAt = createdAt;
@@ -25,12 +25,8 @@ public class UserEntity {
 
   public UserEntity() {}
 
-  public Long getId() {
+  public String getId() {
     return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getFullName() {

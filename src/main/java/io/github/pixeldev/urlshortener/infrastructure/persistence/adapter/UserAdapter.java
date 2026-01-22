@@ -19,7 +19,7 @@ public class UserAdapter implements UserPort {
   }
 
   @Override
-  public UserModel findByIdSafe(final long id) {
+  public UserModel findByIdSafe(final String id) {
     return this.repository
         .findById(id)
         .map(this.mapper::toModel)

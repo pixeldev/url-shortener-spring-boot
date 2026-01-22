@@ -3,17 +3,17 @@ package io.github.pixeldev.urlshortener.domain.model;
 import java.time.Instant;
 
 public class UserModel {
-  private final long id;
+  private final String id;
   private final Instant createdAt;
   private String fullName;
 
-  public UserModel(final long id, final Instant createdAt, final String fullName) {
+  public UserModel(final String id, final Instant createdAt, final String fullName) {
     this.id = id;
     this.createdAt = createdAt;
     this.fullName = fullName;
   }
 
-  public long getId() {
+  public String getId() {
     return id;
   }
 
