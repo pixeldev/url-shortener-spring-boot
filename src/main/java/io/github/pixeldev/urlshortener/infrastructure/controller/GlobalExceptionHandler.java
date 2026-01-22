@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.github.pixeldev.urlshortener.domain.exception.AccessDeniedException;
 import io.github.pixeldev.urlshortener.domain.exception.BadRequestException;
-import io.github.pixeldev.urlshortener.domain.exception.ExpiredUrlException;
+import io.github.pixeldev.urlshortener.domain.exception.ExpiredException;
 import io.github.pixeldev.urlshortener.domain.exception.ModelNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
   private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-  @ExceptionHandler(ExpiredUrlException.class)
-  public ResponseEntity<ErrorResponse> handleExpired(ExpiredUrlException ex) {
-    log.warn("URL expired: {}", ex.getMessage());
+  @ExceptionHandler(ExpiredException.class)
+  public ResponseEntity<ErrorResponse> handleExpired(ExpiredException ex) {
+    log.warn("Expired: {}", ex.getMessage());
     return ResponseEntity.status(HttpStatus.GONE)
         .body(new ErrorResponse(ex.getCode(), ex.getMessage()));
   }

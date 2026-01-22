@@ -7,7 +7,7 @@ import io.github.pixeldev.urlshortener.application.dto.GetUrlShortenedResponse;
 import io.github.pixeldev.urlshortener.application.port.adapter.UrlShortenedPort;
 import io.github.pixeldev.urlshortener.application.port.usecase.GetUrlShortenedUseCasePort;
 import io.github.pixeldev.urlshortener.domain.exception.AccessDeniedException;
-import io.github.pixeldev.urlshortener.domain.exception.ExpiredUrlException;
+import io.github.pixeldev.urlshortener.domain.exception.ExpiredException;
 import io.github.pixeldev.urlshortener.domain.model.UrlShortenedModel;
 
 public class GetUrlShortenedUseCase implements GetUrlShortenedUseCasePort {
@@ -24,7 +24,7 @@ public class GetUrlShortenedUseCase implements GetUrlShortenedUseCasePort {
     final UrlShortenedModel urlShortenedModel =
         this.urlShortenedPort.findByIdWithUserSafe(request.id());
     if (urlShortenedModel.isExpired(this.clock)) {
-      throw new ExpiredUrlException(request.id());
+      throw new ExpiredException(request.id());
     }
     if (!urlShortenedModel.isOwner(request.userId())) {
       throw new AccessDeniedException("User does not have access to this URL shortened");
