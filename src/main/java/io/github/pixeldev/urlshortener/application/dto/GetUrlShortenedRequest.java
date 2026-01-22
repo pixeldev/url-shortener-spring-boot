@@ -1,11 +1,12 @@
 package io.github.pixeldev.urlshortener.application.dto;
 
+import static io.github.pixeldev.urlshortener.domain.validation.Ensure.*;
+
 import org.springframework.lang.Nullable;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-
-public record GetUrlShortenedRequest(
-    @NotBlank(message = "ID cannot be blank") @NotNull(message = "ID cannot be null") String id,
-    @Nullable @Positive(message = "User ID must be positive") Long userId) {}
+public record GetUrlShortenedRequest(String id, @Nullable Long userId) {
+  public GetUrlShortenedRequest {
+    notBlank(id, "ID cannot be blank");
+    positive(userId, "User ID must be positive");
+  }
+}
