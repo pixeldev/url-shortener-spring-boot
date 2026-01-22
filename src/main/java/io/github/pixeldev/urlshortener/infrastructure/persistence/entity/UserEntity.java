@@ -17,7 +17,7 @@ public class UserEntity {
   @Column(name = "created_at", nullable = false)
   private Instant createdAt;
 
-  public UserEntity(Long id, String fullName, Instant createdAt) {
+  public UserEntity(final Long id, final String fullName, final Instant createdAt) {
     this.id = id;
     this.fullName = fullName;
     this.createdAt = createdAt;

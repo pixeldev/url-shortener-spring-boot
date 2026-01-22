@@ -20,34 +20,34 @@ public class GlobalExceptionHandler {
   private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @ExceptionHandler(ExpiredException.class)
-  public ResponseEntity<ErrorResponse> handleExpired(ExpiredException ex) {
+  public ResponseEntity<ErrorResponse> handleExpired(final ExpiredException ex) {
     log.warn("Expired: {}", ex.getMessage());
     return ResponseEntity.status(HttpStatus.GONE)
         .body(new ErrorResponse(ex.getCode(), ex.getMessage()));
   }
 
   @ExceptionHandler(AccessDeniedException.class)
-  public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
+  public ResponseEntity<ErrorResponse> handleAccessDenied(final AccessDeniedException ex) {
     log.warn("Access denied: {}", ex.getMessage());
     return ResponseEntity.status(HttpStatus.FORBIDDEN)
         .body(new ErrorResponse(ex.getCode(), ex.getMessage()));
   }
 
   @ExceptionHandler(ModelNotFoundException.class)
-  public ResponseEntity<Object> handleNotFound(ModelNotFoundException ex) {
+  public ResponseEntity<Object> handleNotFound(final ModelNotFoundException ex) {
     log.warn("Resource not found: {}", ex.getMessage());
     return ResponseEntity.status(HttpStatus.NOT_FOUND)
         .body(new ErrorResponse(ex.getCode(), ex.getMessage()));
   }
 
   @ExceptionHandler(BadRequestException.class)
-  public ResponseEntity<ErrorResponse> handleBadRequest(BadRequestException ex) {
+  public ResponseEntity<ErrorResponse> handleBadRequest(final BadRequestException ex) {
     log.warn("Bad request validation: {}", ex.getMessage());
     return ResponseEntity.status(400).body(new ErrorResponse(ex.getCode(), ex.getMessage()));
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
-  public ResponseEntity<ErrorResponse> handleJsonError(HttpMessageNotReadableException ex) {
+  public ResponseEntity<ErrorResponse> handleJsonError(final HttpMessageNotReadableException ex) {
     if (ex.getRootCause() instanceof BadRequestException domainEx) {
       return handleBadRequest(domainEx);
     }
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
+  public ResponseEntity<ErrorResponse> handleGenericException(final Exception ex) {
     log.error("Unhandled exception occurred: ", ex);
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
         .body(new ErrorResponse("INTERNAL_SERVER_ERROR", "An unexpected error occurred"));

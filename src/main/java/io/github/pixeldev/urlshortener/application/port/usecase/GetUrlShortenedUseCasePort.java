@@ -4,5 +4,5 @@ import io.github.pixeldev.urlshortener.application.dto.GetUrlShortenedRequest;
 import io.github.pixeldev.urlshortener.application.dto.GetUrlShortenedResponse;
 
 public interface GetUrlShortenedUseCasePort {
-  GetUrlShortenedResponse execute(GetUrlShortenedRequest request);
+  GetUrlShortenedResponse execute(final GetUrlShortenedRequest request);
 }

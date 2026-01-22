@@ -27,8 +27,8 @@ public class UrlShortenedController {
   private final ShortUrlUseCasePort shortUrlUseCasePort;
 
   public UrlShortenedController(
-      GetUrlShortenedUseCasePort getUrlShortenedUseCasePort,
-      ShortUrlUseCasePort shortUrlUseCasePort) {
+      final GetUrlShortenedUseCasePort getUrlShortenedUseCasePort,
+      final ShortUrlUseCasePort shortUrlUseCasePort) {
     this.getUrlShortenedUseCasePort = getUrlShortenedUseCasePort;
     this.shortUrlUseCasePort = shortUrlUseCasePort;
   }

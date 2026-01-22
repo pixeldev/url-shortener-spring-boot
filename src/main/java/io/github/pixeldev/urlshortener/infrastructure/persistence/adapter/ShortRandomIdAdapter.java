@@ -15,9 +15,9 @@ public class ShortRandomIdAdapter implements RandomIdPort {
 
   @Override
   public String generate() {
-    StringBuilder sb = new StringBuilder(ID_LENGTH);
+    final StringBuilder sb = new StringBuilder(ID_LENGTH);
     for (int i = 0; i < ID_LENGTH; i++) {
-      int randomIndex = RANDOM.nextInt(ALPHABET.length());
+      final int randomIndex = RANDOM.nextInt(ALPHABET.length());
       sb.append(ALPHABET.charAt(randomIndex));
     }
     return sb.toString();
