@@ -27,6 +27,8 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-redis")
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.15")
 
+  implementation("net.logstash.logback:logstash-logback-encoder:9.0")
+
   implementation("org.flywaydb:flyway-core")
   implementation("org.flywaydb:flyway-database-postgresql")
 
