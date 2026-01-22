@@ -12,6 +12,6 @@ public class UserMapper {
   }
 
   public UserModel toModel(final UserEntity entity) {
-    return new UserModel(entity.getId(), entity.getFullName(), entity.getCreatedAt());
+    return new UserModel(entity.getId(), entity.getCreatedAt(), entity.getFullName());
   }
 }

@@ -9,12 +9,15 @@ import io.github.pixeldev.urlshortener.infrastructure.persistence.entity.UserEnt
 
 @Component
 public class UrlShortenedMapper {
+  private final UserMapper userMapper;
+
+  public UrlShortenedMapper(final UserMapper userMapper) {
+    this.userMapper = userMapper;
+  }
+
   public UrlShortenedEntity toEntity(final UrlShortenedModel model) {
     final UserModel userModel = model.getUser();
-    final UserEntity userEntity =
-        userModel == null
-            ? null
-            : new UserEntity(userModel.getId(), userModel.getFullName(), userModel.getCreatedAt());
+    final UserEntity userEntity = userModel == null ? null : this.userMapper.toEntity(userModel);
 
     return new UrlShortenedEntity(
         model.getId(),
@@ -22,17 +25,14 @@ public class UrlShortenedMapper {
         model.isPrivate(),
         model.getOriginalUrl(),
         model.getExpirationDate(),
-        model.getCreatedAt());
+        model.getCreatedAt(),
+        model.getUpdatedAt());
   }
 
   public UrlShortenedModel toModel(final UrlShortenedEntity entity) {
     final UserEntity userEntity = entity.getUser();
 
-    final UserModel userModel =
-        userEntity == null
-            ? null
-            : new UserModel(
-                userEntity.getId(), userEntity.getFullName(), userEntity.getCreatedAt());
+    final UserModel userModel = userEntity == null ? null : this.userMapper.toModel(userEntity);
 
     return new UrlShortenedModel(
         entity.getId(),
@@ -40,6 +40,7 @@ public class UrlShortenedMapper {
         userModel,
         entity.isPrivate(),
         entity.getOriginalUrl(),
-        entity.getExpirationDate());
+        entity.getExpiresAt(),
+        entity.getUpdatedAt());
   }
 }

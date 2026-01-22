@@ -1,5 +1,7 @@
 package io.github.pixeldev.urlshortener.infrastructure.config;
 
+import java.time.Clock;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,14 +15,16 @@ import io.github.pixeldev.urlshortener.application.usecase.ShortUrlUseCase;
 public class UseCaseConfig {
   @Bean
   public ShortUrlUseCase shortUrlUseCase(
+      final Clock clock,
       final RandomIdPort randomIdPort,
       final UrlShortenedPort urlShortenedPort,
       final UserPort userPort) {
-    return new ShortUrlUseCase(randomIdPort, urlShortenedPort, userPort);
+    return new ShortUrlUseCase(clock, randomIdPort, urlShortenedPort, userPort);
   }
 
   @Bean
-  public GetUrlShortenedUseCase getUrlShortenedUseCase(final UrlShortenedPort urlShortenedPort) {
-    return new GetUrlShortenedUseCase(urlShortenedPort);
+  public GetUrlShortenedUseCase getUrlShortenedUseCase(
+      final Clock clock, final UrlShortenedPort urlShortenedPort) {
+    return new GetUrlShortenedUseCase(clock, urlShortenedPort);
   }
 }

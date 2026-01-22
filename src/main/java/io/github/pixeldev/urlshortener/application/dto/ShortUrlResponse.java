@@ -1,5 +1,5 @@
 package io.github.pixeldev.urlshortener.application.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-public record ShortUrlResponse(String shortUrl, String originalUrl, LocalDateTime expirationDate) {}
+public record ShortUrlResponse(String shortUrl, String originalUrl, Instant expirationDate) {}

@@ -1,6 +1,6 @@
 package io.github.pixeldev.urlshortener.infrastructure.persistence.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.springframework.lang.Nullable;
 
@@ -22,26 +22,31 @@ public class UrlShortenedEntity {
   @Column(name = "original_url", nullable = false)
   private String originalUrl;
 
-  @Column(name = "expiration_date")
+  @Column(name = "expires_at")
   @Nullable
-  private LocalDateTime expirationDate;
+  private Instant expiresAt;
 
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  @Column(name = "created_at", nullable = false, updatable = false)
+  private Instant createdAt;
+
+  @Column(name = "updated_at", nullable = false)
+  private Instant updatedAt;
 
   public UrlShortenedEntity(
       final String id,
       @Nullable final UserEntity user,
       final boolean isPrivate,
       final String originalUrl,
-      @Nullable final LocalDateTime expirationDate,
-      final LocalDateTime createdAt) {
+      @Nullable final Instant expiresAt,
+      final Instant createdAt,
+      final Instant updatedAt) {
     this.id = id;
     this.user = user;
     this.isPrivate = isPrivate;
     this.originalUrl = originalUrl;
-    this.expirationDate = expirationDate;
+    this.expiresAt = expiresAt;
     this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 
   public UrlShortenedEntity() {}
@@ -75,24 +80,19 @@ public class UrlShortenedEntity {
   }
 
   @Nullable
-  public LocalDateTime getExpirationDate() {
-    return expirationDate;
+  public Instant getExpiresAt() {
+    return expiresAt;
   }
 
-  public void setExpirationDate(@Nullable final LocalDateTime expirationDate) {
-    this.expirationDate = expirationDate;
+  public void setExpiresAt(@Nullable final Instant expirationDate) {
+    this.expiresAt = expirationDate;
   }
 
-  public LocalDateTime getCreatedAt() {
+  public Instant getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  @PrePersist
-  protected void onCreate() {
-    this.createdAt = java.time.LocalDateTime.now();
+  public Instant getUpdatedAt() {
+    return updatedAt;
   }
 }

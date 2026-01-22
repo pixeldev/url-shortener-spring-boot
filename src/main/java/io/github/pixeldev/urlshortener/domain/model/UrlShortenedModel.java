@@ -1,38 +1,42 @@
 package io.github.pixeldev.urlshortener.domain.model;
 
-import java.time.LocalDateTime;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.Objects;
 
 import org.springframework.lang.Nullable;
 
 public class UrlShortenedModel {
   private final String id;
-  private final LocalDateTime createdAt;
+  private final Instant createdAt;
   @Nullable private UserModel user;
   private boolean isPrivate;
   private String originalUrl;
-  @Nullable private LocalDateTime expirationDate;
+  @Nullable private Instant expirationDate;
+  private Instant updatedAt;
 
   public UrlShortenedModel(
       final String id,
-      final LocalDateTime createdAt,
+      final Instant createdAt,
       @Nullable final UserModel user,
       final boolean isPrivate,
       final String originalUrl,
-      @Nullable final LocalDateTime expirationDate) {
+      @Nullable final Instant expirationDate,
+      final Instant updatedAt) {
     this.id = id;
     this.createdAt = createdAt;
     this.user = user;
     this.isPrivate = isPrivate;
     this.originalUrl = originalUrl;
     this.expirationDate = expirationDate;
+    this.updatedAt = updatedAt;
   }
 
   public String getId() {
     return id;
   }
 
-  public LocalDateTime getCreatedAt() {
+  public Instant getCreatedAt() {
     return createdAt;
   }
 
@@ -62,19 +66,27 @@ public class UrlShortenedModel {
   }
 
   @Nullable
-  public LocalDateTime getExpirationDate() {
+  public Instant getExpirationDate() {
     return expirationDate;
   }
 
-  public void setExpirationDate(@Nullable final LocalDateTime expirationDate) {
+  public void setExpirationDate(@Nullable final Instant expirationDate) {
     this.expirationDate = expirationDate;
   }
 
-  public boolean isExpired() {
-    return expirationDate != null && expirationDate.isBefore(LocalDateTime.now());
+  public boolean isExpired(final Clock clock) {
+    return expirationDate != null && expirationDate.isBefore(Instant.now(clock));
   }
 
   public boolean isOwner(final @Nullable Long userId) {
     return user != null && Objects.equals(user.getId(), userId);
+  }
+
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(final Instant updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }
