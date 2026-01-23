@@ -5,26 +5,26 @@ import java.time.Clock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.github.pixeldev.urlshortener.application.port.adapter.RandomIdPort;
-import io.github.pixeldev.urlshortener.application.port.adapter.UrlShortenedPort;
-import io.github.pixeldev.urlshortener.application.port.adapter.UserPort;
-import io.github.pixeldev.urlshortener.application.usecase.GetUrlShortenedUseCase;
-import io.github.pixeldev.urlshortener.application.usecase.ShortUrlUseCase;
+import io.github.pixeldev.urlshortener.application.port.out.IdGeneratorPort;
+import io.github.pixeldev.urlshortener.application.port.out.UrlShortenedRepository;
+import io.github.pixeldev.urlshortener.application.port.out.UserRepository;
+import io.github.pixeldev.urlshortener.application.service.GetUrlShortenedService;
+import io.github.pixeldev.urlshortener.application.service.ShortUrlService;
 
 @Configuration
 public class UseCaseConfig {
   @Bean
-  public ShortUrlUseCase shortUrlUseCase(
+  public ShortUrlService shortUrlUseCase(
       final Clock clock,
-      final RandomIdPort randomIdPort,
-      final UrlShortenedPort urlShortenedPort,
-      final UserPort userPort) {
-    return new ShortUrlUseCase(clock, randomIdPort, urlShortenedPort, userPort);
+      final IdGeneratorPort idGeneratorPort,
+      final UrlShortenedRepository urlShortenedRepository,
+      final UserRepository userRepository) {
+    return new ShortUrlService(clock, idGeneratorPort, urlShortenedRepository, userRepository);
   }
 
   @Bean
-  public GetUrlShortenedUseCase getUrlShortenedUseCase(
-      final Clock clock, final UrlShortenedPort urlShortenedPort) {
-    return new GetUrlShortenedUseCase(clock, urlShortenedPort);
+  public GetUrlShortenedService getUrlShortenedUseCase(
+      final Clock clock, final UrlShortenedRepository urlShortenedRepository) {
+    return new GetUrlShortenedService(clock, urlShortenedRepository);
   }
 }

@@ -3,31 +3,32 @@ package io.github.pixeldev.urlshortener.domain.model;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Optional;
 
-import org.springframework.lang.Nullable;
+import io.github.pixeldev.urlshortener.domain.validation.Ensure;
 
 public class UrlShortenedModel {
   private final String id;
   private final Instant createdAt;
-  @Nullable private UserModel user;
+  private final UserModel user;
   private boolean isPrivate;
   private String originalUrl;
-  @Nullable private Instant expirationDate;
+  private Instant expirationDate;
   private Instant updatedAt;
 
   public UrlShortenedModel(
       final String id,
       final Instant createdAt,
-      @Nullable final UserModel user,
+      final UserModel user,
       final boolean isPrivate,
       final String originalUrl,
-      @Nullable final Instant expirationDate,
+      final Instant expirationDate,
       final Instant updatedAt) {
-    this.id = id;
+    this.id = Ensure.notBlank(id, "ID cannot be blank or null");
     this.createdAt = createdAt;
     this.user = user;
     this.isPrivate = isPrivate;
-    this.originalUrl = originalUrl;
+    this.originalUrl = Ensure.notNull(originalUrl, "Original URL cannot be null");
     this.expirationDate = expirationDate;
     this.updatedAt = updatedAt;
   }
@@ -40,13 +41,8 @@ public class UrlShortenedModel {
     return createdAt;
   }
 
-  @Nullable
-  public UserModel getUser() {
-    return user;
-  }
-
-  public void setUser(@Nullable final UserModel user) {
-    this.user = user;
+  public Optional<UserModel> getUser() {
+    return Optional.ofNullable(user);
   }
 
   public boolean isPrivate() {
@@ -65,12 +61,11 @@ public class UrlShortenedModel {
     this.originalUrl = originalUrl;
   }
 
-  @Nullable
-  public Instant getExpirationDate() {
-    return expirationDate;
+  public Optional<Instant> getExpirationDate() {
+    return Optional.ofNullable(expirationDate);
   }
 
-  public void setExpirationDate(@Nullable final Instant expirationDate) {
+  public void setExpirationDate(final Instant expirationDate) {
     this.expirationDate = expirationDate;
   }
 
@@ -78,7 +73,7 @@ public class UrlShortenedModel {
     return expirationDate != null && expirationDate.isBefore(Instant.now(clock));
   }
 
-  public boolean hasAccess(final @Nullable String userId) {
+  public boolean hasAccess(final String userId) {
     return !this.isPrivate || (user != null && Objects.equals(user.getId(), userId));
   }
 

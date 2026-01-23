@@ -1,0 +1,14 @@
+{
+  "@class": "io.github.pixeldev.urlshortener.infrastructure.adapter.out.persistence.entity.UrlShortenedCacheDto",
+  "id": "LgYwBW8",
+  "originalUrl": "https://auth.docker.com/desktop/redirect?code=Dwe1d2_xUVDNjk6BAeNoj7g8T8FJJcNOdOkOqI4cshxg8&state=_OPmqVWwwFlwQ5SFvKKB2a-0Isv5KZf_CLXRuQdMSEE",
+  "createdAt": "2026-01-22T17:11:57.989656Z",
+  "expirationDate": "2026-01-22T17:21:57.989656Z",
+  "user": {
+    "@class": "io.github.pixeldev.urlshortener.infrastructure.adapter.out.persistence.entity.UserCacheDto",
+    "id": "3a8a3575-04f5-47c9-b9d3-378345c75704",
+    "fullName": "Angel Miranda",
+    "createdAt": "2026-01-22T16:56:35.789290Z"
+  },
+  "private": true
+}

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
@@ -17,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.github.pixeldev.urlshortener.infrastructure.controller.GlobalExceptionHandler;
+import io.github.pixeldev.urlshortener.infrastructure.adapter.in.rest.handler.GlobalExceptionHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +30,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(
       final HttpSecurity http, final ObjectMapper objectMapper) throws Exception {
-    http.csrf(csrf -> csrf.disable())
+    http.csrf(AbstractHttpConfigurer::disable)
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
@@ -67,7 +68,7 @@ public class SecurityConfig {
         NimbusJwtDecoder.withJwkSetUri(jwkSetUri).jwsAlgorithm(SignatureAlgorithm.ES256).build();
 
     final OAuth2TokenValidator<Jwt> audienceValidator =
-        new JwtClaimValidator<Object>(
+        new JwtClaimValidator<>(
             JwtClaimNames.AUD,
             aud -> {
               if (aud instanceof String s) {
